@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Monitoramento de Rolamentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style/css.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-cogs fa-3x"></i>
+                <h2>Monitoramento de Rolamentos</h2>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Análises</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histórico</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Alertas</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard - Monitoramento de Rolamentos</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-atualizar">
+                        <i class="fas fa-sync-alt"></i>
+                        Atualizar Dados
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i>
+                        Exportar Relatório
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-temperature-high"></i>
+                            Temperatura do Rolamento
+                        </h2>
+                        <div class="card-actions">
+                            <button title="Ampliar"><i class="fas fa-expand"></i></button>
+                            <button title="Configurações"><i class="fas fa-cog"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="temperaturaChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-wave-square"></i>
+                            Vibração (Frequência x Tempo)
+                        </h2>
+                        <div class="card-actions">
+                            <button title="Ampliar"><i class="fas fa-expand"></i></button>
+                            <button title="Configurações"><i class="fas fa-cog"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="frequenciaChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Transformada de Fourier (FFT)
+                        </h2>
+                        <div class="card-actions">
+                            <button title="Ampliar"><i class="fas fa-expand"></i></button>
+                            <button title="Configurações"><i class="fas fa-cog"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="fftChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-diagnoses"></i>
+                            Diagnóstico do Rolamento
+                        </h2>
+                        <div class="card-actions">
+                            <button title="Histórico"><i class="fas fa-history"></i></button>
+                        </div>
+                    </div>
+                    <div class="diagnostico-content">
+                        <div class="status-card">
+                            <h3>Status Atual</h3>
+                            <div class="status-value" id="status-rolamento">--</div>
+                        </div>
+                        <div class="status-card">
+                            <h3>Recomendação</h3>
+                            <div class="status-value" id="recomendacao">Aguardando dados...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/resgata_dados.js"></script>
+    <script src="scripts/interpreta_dados.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
