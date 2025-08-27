@@ -1,8 +1,8 @@
 // resgata_dados.js
 /**
- * em uma aplicação real, esta função faria uma requisição (fetch)
+ * Em uma aplicação real, essa função faria uma requisição (fetch)
  * para um servidor ou API para obter os dados mais recentes do sensor do rolamento.
- * por enquanto, ela retorna dados fictícios para fins de desenvolvimento.
+ * Por enquanto, ela retorna dados fictícios para fins de desenvolvimento.
  */
 
 async function fetchDadosRolamento() {
@@ -28,19 +28,17 @@ async function fetchDadosRolamento() {
     return gerarDadosSimulados();
 }
 
-// aqui ta tudo errado meu deus queria importar a biblioteca mas so consegui no python ate agora
 function gerarDadosSimulados() {
-    const agora = new Date();
     const timestamps = [];
     const temperaturaData = [];
     const vibracaoData = [];
     const fftFrequencias = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
     const fftData = [];
 
-    // Gerar dados para os últimos 10 minutos
-    for (let i = 9; i >= 0; i--) {
-        const time = new Date(agora.getTime() - i * 60000);
-        timestamps.push(time.getMinutes() + ':' + time.getSeconds().toString().padStart(2, '0'));
+    // Gerar dados para os últimos 10 pontos (tempo em segundos)
+    for (let i = 0; i < 10; i++) {
+        // Tempo em segundos (0, 10, 20, ..., 90)
+        timestamps.push(i * 10 + 's');
         
         // Temperatura com tendência de aumento
         temperaturaData.push(65 + Math.random() * 10);
@@ -59,7 +57,7 @@ function gerarDadosSimulados() {
         fftData.push(valor);
     }
 
-    // simula um pequeno atraso de rede
+    // Simula um pequeno atraso de rede
     return new Promise(resolve => {
         setTimeout(() => {
             resolve({
