@@ -1,109 +1,57 @@
-// resgata_dados.js
 /**
- * Em uma aplicação real, essa função faria uma requisição (fetch)
- * para um servidor ou API para obter os dados mais recentes do sensor do rolamento.
- * Por enquanto, ela retorna dados fictícios para fins de desenvolvimento.
+ * resgata_dados.js
+ * Simula a busca de dados do servidor com valores mais realistas.
  */
 
 async function fetchDadosRolamento() {
     console.log("Buscando dados do servidor... (simulação)");
-
-    // Exemplo de como buscar dados de um CSV (comentado para implementação futura)
-    /*
-    try {
-        const response = await fetch('dados-rolamento.csv');
-        if (!response.ok) {
-            throw new Error('Erro ao carregar arquivo CSV');
-        }
-        const csvData = await response.text();
-        return processarCSV(csvData);
-    } catch (error) {
-        console.error("Erro ao carregar dados do CSV:", error);
-        // Fallback para dados simulados
-        return gerarDadosSimulados();
-    }
-    */
-
-    // Geração de dados simulados
     return gerarDadosSimulados();
 }
 
 function gerarDadosSimulados() {
-    const timestamps = [];
+    // --- Dados de Temperatura ---
+    const timestamps_temp = [];
     const temperaturaData = [];
+    for (let i = 0; i < 10; i++) {
+        timestamps_temp.push(i * 2 + 's'); // Simula 20 segundos
+        temperaturaData.push(55 + Math.random() * 10);
+    }
+
+    // --- Dados de Vibração (com amplitudes ajustadas) ---
+    const nAmostras = 2048; 
+    const taxaAmostragem = 5120; // Exemplo de taxa de amostragem
+    const timestamps_vib = [];
     const vibracaoData = [];
-    const fftFrequencias = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
-    const fftData = [];
+    
+    // Frequências que simulam uma falha
+    const freq1 = 75;  // Frequência de exemplo
+    const freq2 = 180; // Harmônico ou outra falha
 
-    // Gerar dados para os últimos 10 pontos (tempo em segundos)
-    for (let i = 0; i < 10; i++) {
-        // Tempo em segundos (0, 10, 20, ..., 90)
-        timestamps.push(i * 10 + 's');
+    for (let i = 0; i < nAmostras; i++) {
+        const tempo = i / taxaAmostragem;
+        timestamps_vib.push(tempo.toFixed(4));
         
-        // Temperatura com tendência de aumento
-        temperaturaData.push(65 + Math.random() * 10);
-        
-        // Vibração com padrão oscilatório
-        vibracaoData.push((Math.sin(i) + 1) * 2 + Math.random() * 0.5);
+        // SINAL COM AMPLITUDES AJUSTADAS (ex: 0.2 + 0.1 + ruído)
+        const sinal = 0.2 * Math.sin(2 * Math.PI * freq1 * tempo) +
+                      0.1 * Math.sin(2 * Math.PI * freq2 * tempo) +
+                      (Math.random() - 0.5) * 0.1; // Ruído de fundo reduzido                  
+        vibracaoData.push(sinal);
     }
-
-    // Dados FFT com picos em frequências específicas
-    for (let i = 0; i < 10; i++) {
-        let valor = Math.random() * 0.5;
-        // Criar picos em 30Hz, 50Hz e 80Hz
-        if (i === 2) valor = 2.5 + Math.random() * 0.5; // 30Hz
-        if (i === 4) valor = 3.0 + Math.random() * 0.8; // 50Hz
-        if (i === 7) valor = 1.8 + Math.random() * 0.4; // 80Hz
-        fftData.push(valor);
-    }
-
+    
     // Simula um pequeno atraso de rede
     return new Promise(resolve => {
         setTimeout(() => {
             resolve({
-                timestamps: timestamps,
+                // Dados para o Gráfico de Temperatura
+                timestamps_temp: timestamps_temp,
                 temperatura: temperaturaData,
+
+                // Dados para o Gráfico de Vibração e para o cálculo da FFT
+                timestamps_vib: timestamps_vib,
                 vibracao: vibracaoData,
-                fftFrequencias: fftFrequencias,
-                fft: fftData
+                taxaAmostragem: taxaAmostragem,
+                nAmostras: nAmostras
             });
         }, 500);
     });
-}
-
-// Função para processar CSV (para implementação futura)
-function processarCSV(csvData) {
-    /*
-    const linhas = csvData.split('\n');
-    const dados = {
-        timestamps: [],
-        temperatura: [],
-        vibracao: [],
-        fftFrequencias: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
-        fft: []
-    };
-    
-    // Pular cabeçalho e processar linhas
-    for (let i = 1; i < linhas.length; i++) {
-        const valores = linhas[i].split(',');
-        if (valores.length >= 3) {
-            dados.timestamps.push(valores[0]);
-            dados.temperatura.push(parseFloat(valores[1]));
-            dados.vibracao.push(parseFloat(valores[2]));
-        }
-    }
-    
-    // Processar dados FFT (última linha)
-    const ultimaLinha = linhas[linhas.length - 1].split(',');
-    if (ultimaLinha.length > 3) {
-        for (let i = 3; i < ultimaLinha.length; i++) {
-            dados.fft.push(parseFloat(ultimaLinha[i]));
-        }
-    }
-    
-    return dados;
-    */
-    
-    // Por enquanto, retorna dados simulados
-    return gerarDadosSimulados();
 }

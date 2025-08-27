@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <canvas id="temperaturaChart"></canvas>
+                        <div id="temperaturaChart"></div>
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <canvas id="frequenciaChart"></canvas>
+                        <div id="frequenciaChart"></div>
                     </div>
                 </div>
 
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <canvas id="fftChart"></canvas>
+                        <div id="fftChart"></div>
                     </div>
                 </div>
 
@@ -136,7 +136,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fft.js/4.0.4/fft.js"></script>
+    
     <script src="scripts/resgata_dados.js"></script>
     <script src="scripts/interpreta_dados.js"></script>
     <script src="scripts/script.js"></script>
